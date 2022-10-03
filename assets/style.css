@@ -1,0 +1,20 @@
+/* everything */
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    text-align: center;
+}
+
+.score {
+    display: flex;
+    padding: 16px 0 0 16px;
+}
+.timer {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 16px 0 0 16px;
+}
