@@ -10,13 +10,13 @@
 <body>
     <!-- Highscore page and timer -->
     <nav>
-    <div class="score"><a href="highscore.html">View Highscore</a></div>
-    <div class="timer">Time: <span id="time">0</span></div>
+        <div class="score"><a href="highscore.html">View Highscore</a></div>
+        <div class="timer">Time: <span id="time">0</span></div>
     </nav>
 <!-- Start page -->
    <main>
     <header>
-        <div id="start-screen" class="start">
+        <div id="startScreen" class="start">
             <h1>Coding Quiz Challenge</h1>
                 <p>
                     Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
@@ -25,32 +25,32 @@
         </div>
     </header>
 <!-- Question selection -->
-<div id ="questionsPage">
-    <h1 id="quizQuestion"></h1>
-<ul>
-    <li><button type="button" id="choiceOne"></button></li>
-    <li><button type="button" id="choiceTwo"></button></li>
-    <li><button type="button" id="choiceThree"></button></li>
-    <li><button type="button" id="choiceFour"></button></li>
-</ul>
+<div id ="questionsPage" class="hide">
+    <h1 id="quizQuestion">Question Title</h1>
+    <ul>
+        <li><button type="button" id="choiceOne"></button></li>
+        <li><button type="button" id="choiceTwo"></button></li>
+        <li><button type="button" id="choiceThree"></button></li>
+        <li><button type="button" id="choiceFour"></button></li>
+    </ul>
 
-<!-- correct answer -->
-<div id="correctAnswer"></div>
+    <!-- correct answer -->
+    <div id="correctAnswer"></div>
 </div>
 
 <!-- User score -->
 <div id="scorePage">
     <h1 id="done">All done!</h1>
     <div id="yourFinalScore"></div>
-<form action="highscore.html">
-    <label for="initial">Enter Initials:</label>
-    <input type="text" id="initial" name="initial">
-    <button id="initialSubmit" type="button">Submit</button>
-</form>
+    <form action="highscore.html">
+        <label for="initial">Enter Initials:</label>
+        <input type="text" id="initial" name="initial">
+        <button id="initialSubmit" type="button">Submit</button>
+    </form>
 </div>
 
 <!-- End page go back or clear high score-->
-<div>
+<div id="highscorePage">
     <h1>Highscore</h1>
     <p id="highScorelist"></p>
     <div>
@@ -59,6 +59,9 @@
     </div>
 </div>
    </main>
-    <script src="script.js"></script>
+   
+   <script src="./assets/script.js"></script>
+
+
 </body>
 </html>
