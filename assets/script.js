@@ -8,11 +8,23 @@ var questionsContainer = document.getElementById("questionsPage");
 var userScoreContainer = document.getElementById("scorePage");
 var highscoreContainer = document.getElementById("highscorePage");
 
+var choiceContainer = document.getElementById("choice-container")
+var choiceOne = document.getElementById("choiceOne")
+var choiceTwo = document.getElementById("choiceTwo")
+var choiceThree = document.getElementById("choiceThree")
+var choiceFour = document.getElementById("choiceFour")
+
+var yourFinalScore = document.getElementById("yourFinalScore")
 var questionTitle = document.getElementById("quizQuestion");
 var response = document.getElementById("response")
-
+var goBack = document.getElementById("goBack")
+var clearHighScore = document.getElementById("clearHighScore")
 var initials = document.getElementById("initials");
+
 // Data
+var currentScore = 0;
+var currentQuestion = 0;  // what if we use this to act as an incrementor
+
 var quizQuestions = [ 
   {
     questionTitle: "Commonly used data types DO Not Include: ",
@@ -40,7 +52,7 @@ var quizQuestions = [
 // How do we keep track of what question we are on (?)
 var beginscore = 0;
 
-var secondsLeft = 10
+var secondsLeft = 100
 
 function setTime() {
   // Sets interval in variable
@@ -58,13 +70,16 @@ function setTime() {
 
 start.addEventListener("click", beginGame);
 
-function beginGame() {
-  // first question will appear with 4 choice box to choose from
-  startQuestions()
+function beginGame(event) {
+  // console.log(event);
+  console.log(event.target);
   // we start the timer
   setTime()
-  endScore()
-  highscorePage()
+  // first question will appear with 4 choice box to choose from
+  startQuestions()
+  // We want these methods to run at a different time in our program
+  // endScore()
+  //highscorePage()
 }
 
 
@@ -73,32 +88,54 @@ function startQuestions() {
   startContainer.setAttribute("class", "hide");
   // un hide or show this container
   questionsContainer.setAttribute("class", "show");
-  questionTitle.textContent = quizQuestions.questionTitle
-  answerChoices.textContent = quizQuestions.answerChoices
-  answerQuestion.textContent = quizQuestions.answerQuestion
+  questionTitle.textContent = quizQuestions[currentQuestion].questionTitle
+  choiceOne.textContent = quizQuestions[currentQuestion].answerChoices[0]
+  choiceTwo.textContent = quizQuestions[currentQuestion].answerChoices[1]
+  choiceThree.textContent = quizQuestions[currentQuestion].answerChoices[2]
+  choiceFour.textContent = quizQuestions[currentQuestion].answerChoices[3]
+  
+  
+  //answerQuestion.textContent = quizQuestions.answerQuestion
   // user can click on one of the box and 
   // it will return if the choice is correct answer
-  answerChoices.addEventListener("click", function(event){
-    checkAnswer(event)
+ /* answerChoices.addEventListener("click", function(){
+    checkAnswer()
   });
-  function checkAnswer(event) {
-    if (userClick === answerQuestion) {
-      response.textContent = "Correct!";
-    }
-    else {
-      response.textContent = "Wrong!";
-      secondsLeft = -10 //deduct 10 sec
-    }
-  }
-  // text wrong or correct will be shown below the box
-  // then the next question will appear
-  // once the all question is attempted user will be shown All done with finial score
+  */
+
+  choiceContainer.addEventListener("click", function(event) {
+    
+    // capture the user selection
+    console.log(event.target);
+    var userAnswer = event.target.textContent;
+    console.log(userAnswer);
+    // check against the correct answer
+    checkAnswer(userAnswer);
+  })
 }
+
+function checkAnswer(userAnswer) {
+
+  if (userAnswer === quizQuestions[currentQuestion].answerQuestion) {
+    response.textContent = "Correct!";
+  }
+  else {
+    response.textContent = "Wrong!";
+    secondsLeft = -10
+  }
+  // currentQuestion = currentQuestion + 1;
+  currentQuestion++;
+  startQuestions();
+}
+// text wrong or correct will be shown below the box
+// then the next question will appear
+// once the all question is attempted user will be shown All done with finial score
+
 
 function endScore() {
   startContainer.setAttribute("class", "hide");
   userScoreContainer.setAttribute("class", "show");
-  finalScoreIs.textContent = "Your final score is " + secondsLeft;
+  yourFinalScore.textContent = "Your final score is " + secondsLeft;
   // user will put their initials in the text box and click a submit button
   initials.textContent = "Enter Your Initials: " ;
   initialSubmit.textContent = "Submit"
@@ -108,10 +145,19 @@ function endScore() {
 function highscorePage () {
   startContainer.setAttribute("class", "hide");
   highscoreContainer.setAttribute("class", "show")
-
+  localStorage.setItem("yourFinalScore", JSON.stringify (yourFinalScore));
   // high score page will have their current score and previous score
+  clearHighScore.addEventListener("click", function() {
+    localStorage.clear();
+  });
+  goBack.addEventListener("click", function(){
+    beginGame();
+  });
   // it will have a go back button to play again
   // it will have a clear high score button to reset the local file
 }
 
 // Initilization
+
+
+// var seeScore = JSON.parse(localStorage.getItem("yourFinalScore"));

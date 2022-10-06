@@ -9,25 +9,40 @@ body {
     text-align: center;
 }
 
+h1 {
+    margin-top: 35px;
+   padding: 25px; 
+}
+p {
+    margin: 0 150px;
+}
+button {
+    margin: 30px;
+    background-color: rgb(212, 15, 212);
+    color: white;
+    border-radius: 5px;
+}
 .score {
     display: flex;
     padding: 16px 0 0 16px;
 }
 .timer {
    float: right;
-    padding: 0 16px 20px 0;
+    padding: 0 35px 20px 0;
 }
 
+
+
 /* hide other section */
-#questionsPage {
+/* #questionsPage {
     display: none;
 }
 #scorePage {
     display: none;
 }
 #highscorePage{
-    display: none;
-}
+    display: none; */
+/* } */
 .hide {
     display: none;
 }
