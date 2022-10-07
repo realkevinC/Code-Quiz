@@ -21,8 +21,8 @@ var goBack = document.getElementById("goBack")
 var clearHighScore = document.getElementById("clearHighScore")
 var initials = document.getElementById("initials");
 var initialSubmit = document.getElementById("initialSubmit")
-var seeScore = JSON.parse(localStorage.getItem("secondsLeft"));
-
+var highscores = JSON.parse(localStorage.getItem("highscores")) || []; 
+var highScoreList = document.getElementById("highScoreList")
 
 // Data
 var currentScore = 0;
@@ -51,22 +51,10 @@ var quizQuestions = [
     answerQuestion: "console. log",
   },
 ]
-
 // How do we keep track of what question we are on (?)
-
 var secondsLeft = 100
 
-function setTime() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timer.textContent = secondsLeft + "second remaining";
-    if (secondsLeft === 0 || quizQuestions.length === currentQuestion+1){
-      clearInterval(timerInterval);
-      endScore();
-    }
-  }, 1000); 
-}
+
 // User interaction
 // when user click start quiz to begin  --> button.addEventListener("click", callback function (beginGame)
 
@@ -76,6 +64,17 @@ function beginGame(event) {
   // console.log(event);
   console.log(event.target);
   // we start the timer
+  function setTime() {
+  // Sets interval in variable
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      timer.textContent = secondsLeft + "second remaining";
+      if (secondsLeft === 0 || quizQuestions.length === currentQuestion+1){
+        clearInterval(timerInterval);
+        endScore();
+      }
+    }, 1000); 
+  }
   setTime()
   // first question will appear with 4 choice box to choose from
   startQuestions()
@@ -137,12 +136,10 @@ function endScore() {
   userScoreContainer.setAttribute("class", "show");
   yourFinalScore.textContent = "Your final score is " + secondsLeft;
   // user will put their initials in the text box and click a submit button
-  initials.textContent = "Enter Your Initials: ";
   initialSubmit.textContent = "Submit";
-  // when user click submit it will direct to high score page
+  initials.textContent = "Enter Your Initials: ";
+  // when user click submit it will direct to high score page 
 }
-
-var highscores = []
 
 function highscorePage () {
   startContainer.setAttribute("class", "hide");
@@ -150,36 +147,39 @@ function highscorePage () {
   highscoreContainer.setAttribute("class", "show")
   // localStorage.setItem("yourFinalScore", JSON.stringify (yourFinalScore));
   // high score page will have their current score and previous score
-  clearHighScore.addEventListener("click", function() {
-    localStorage.clear();
-  });
-  goBack.addEventListener("click", function(){
-    startContainer.setAttribute("class", "show");
-    highscoreContainer.setAttribute("class", "hide")
-    function reset() {
-      secondsLeft = 100;
-      currentQuestion = 0;
-      }
-      reset();
-  });
   // it will have a go back button to play again
   // it will have a clear high score button to reset the local file
+  
 }
+var updatedScore = {initials, secondsLeft};
 
 // Initilization
 
 initialSubmit.addEventListener("click", function() {
-  
-  // localStorage.setItem("secondsLeft", secondsLeft);
-  var highscores = localStorage.getItem("secondsLeft") || [];
-  function showFinalScore() {
-    highscores.push(secondsLeft)
-    // localStorage.setItem("secondsLeft", highscores);
-    localStorage.setItem("secondsLeft", JSON.stringify(highscores));
-  }
-  showFinalScore();
+  var initials = document.getElementById("initials").value;
+  console.log(initials)
+  var updatedScore = {
+    score: secondsLeft,
+    initials: initials,
+  };
+  highscores.push(updatedScore);
+  window.localStorage.setItem("highscores", JSON.stringify(highscores));
+  highScoreList.textContent = updatedScore.initials + updatedScore.score
   highscorePage();
 });
 
+clearHighScore.addEventListener("click", function() {
+  localStorage.clear();
+});
+
+goBack.addEventListener("click", function(){
+  startContainer.setAttribute("class", "show");
+  highscoreContainer.setAttribute("class", "hide")
+  function reset() {
+    secondsLeft = 100;
+    currentQuestion = 0;
+    }
+    reset();
+});
 
 
