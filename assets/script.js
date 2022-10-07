@@ -21,7 +21,7 @@ var goBack = document.getElementById("goBack")
 var clearHighScore = document.getElementById("clearHighScore")
 var initials = document.getElementById("initials");
 var initialSubmit = document.getElementById("initialSubmit")
-
+var seeScore = JSON.parse(localStorage.getItem("secondsLeft"));
 
 
 // Data
@@ -142,7 +142,7 @@ function endScore() {
   // when user click submit it will direct to high score page
 }
 
-// highscoreList = []
+var highscores = []
 
 function highscorePage () {
   startContainer.setAttribute("class", "hide");
@@ -170,10 +170,12 @@ function highscorePage () {
 
 initialSubmit.addEventListener("click", function() {
   
-  localStorage.setItem("secondsLeft", secondsLeft);
-  
+  // localStorage.setItem("secondsLeft", secondsLeft);
+  var highscores = localStorage.getItem("secondsLeft") || [];
   function showFinalScore() {
-    localStorage.getItem("secondsLeft");
+    highscores.push(secondsLeft)
+    // localStorage.setItem("secondsLeft", highscores);
+    localStorage.setItem("secondsLeft", JSON.stringify(highscores));
   }
   showFinalScore();
   highscorePage();
@@ -181,4 +183,3 @@ initialSubmit.addEventListener("click", function() {
 
 
 
-// var seeScore = JSON.parse(localStorage.getItem("yourFinalScore"));
