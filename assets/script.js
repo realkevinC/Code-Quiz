@@ -142,19 +142,25 @@ function endScore() {
   // when user click submit it will direct to high score page
 }
 
-highscoreList = []
+// highscoreList = []
 
 function highscorePage () {
   startContainer.setAttribute("class", "hide");
   userScoreContainer.setAttribute("class", "hide")
   highscoreContainer.setAttribute("class", "show")
-  localStorage.setItem("yourFinalScore", JSON.stringify (yourFinalScore));
+  // localStorage.setItem("yourFinalScore", JSON.stringify (yourFinalScore));
   // high score page will have their current score and previous score
   clearHighScore.addEventListener("click", function() {
     localStorage.clear();
   });
   goBack.addEventListener("click", function(){
-    beginGame();
+    startContainer.setAttribute("class", "show");
+    highscoreContainer.setAttribute("class", "hide")
+    function reset() {
+      secondsLeft = 100;
+      currentQuestion = 0;
+      }
+      reset();
   });
   // it will have a go back button to play again
   // it will have a clear high score button to reset the local file
@@ -163,8 +169,16 @@ function highscorePage () {
 // Initilization
 
 initialSubmit.addEventListener("click", function() {
+  
+  localStorage.setItem("secondsLeft", secondsLeft);
+  
+  function showFinalScore() {
+    localStorage.getItem("secondsLeft");
+  }
+  showFinalScore();
   highscorePage();
 });
+
 
 
 // var seeScore = JSON.parse(localStorage.getItem("yourFinalScore"));
