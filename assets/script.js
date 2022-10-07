@@ -20,6 +20,9 @@ var response = document.getElementById("response")
 var goBack = document.getElementById("goBack")
 var clearHighScore = document.getElementById("clearHighScore")
 var initials = document.getElementById("initials");
+var initialSubmit = document.getElementById("initialSubmit")
+
+
 
 // Data
 var currentScore = 0;
@@ -50,7 +53,6 @@ var quizQuestions = [
 ]
 
 // How do we keep track of what question we are on (?)
-var beginscore = 0;
 
 var secondsLeft = 100
 
@@ -59,7 +61,7 @@ function setTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
     timer.textContent = secondsLeft + "second remaining";
-    if (secondsLeft === 0){
+    if (secondsLeft === 0 || quizQuestions.length === currentQuestion+1){
       clearInterval(timerInterval);
       endScore();
     }
@@ -78,7 +80,6 @@ function beginGame(event) {
   // first question will appear with 4 choice box to choose from
   startQuestions()
   // We want these methods to run at a different time in our program
-  // endScore()
   //highscorePage()
 }
 
@@ -94,14 +95,9 @@ function startQuestions() {
   choiceThree.textContent = quizQuestions[currentQuestion].answerChoices[2]
   choiceFour.textContent = quizQuestions[currentQuestion].answerChoices[3]
   
-  
-  //answerQuestion.textContent = quizQuestions.answerQuestion
   // user can click on one of the box and 
   // it will return if the choice is correct answer
- /* answerChoices.addEventListener("click", function(){
-    checkAnswer()
-  });
-  */
+ 
 
   choiceContainer.addEventListener("click", function(event) {
     
@@ -121,9 +117,12 @@ function checkAnswer(userAnswer) {
   }
   else {
     response.textContent = "Wrong!";
-    secondsLeft = -10
+    secondsLeft -= 10
   }
-  // currentQuestion = currentQuestion + 1;
+  if (quizQuestions.length === currentQuestion+1){
+    endScore();
+    return;
+  }
   currentQuestion++;
   startQuestions();
 }
@@ -134,16 +133,20 @@ function checkAnswer(userAnswer) {
 
 function endScore() {
   startContainer.setAttribute("class", "hide");
+  questionsContainer.setAttribute("class", "hide")
   userScoreContainer.setAttribute("class", "show");
   yourFinalScore.textContent = "Your final score is " + secondsLeft;
   // user will put their initials in the text box and click a submit button
-  initials.textContent = "Enter Your Initials: " ;
-  initialSubmit.textContent = "Submit"
+  initials.textContent = "Enter Your Initials: ";
+  initialSubmit.textContent = "Submit";
   // when user click submit it will direct to high score page
 }
 
+highscoreList = []
+
 function highscorePage () {
   startContainer.setAttribute("class", "hide");
+  userScoreContainer.setAttribute("class", "hide")
   highscoreContainer.setAttribute("class", "show")
   localStorage.setItem("yourFinalScore", JSON.stringify (yourFinalScore));
   // high score page will have their current score and previous score
@@ -158,6 +161,10 @@ function highscorePage () {
 }
 
 // Initilization
+
+initialSubmit.addEventListener("click", function() {
+  highscorePage();
+});
 
 
 // var seeScore = JSON.parse(localStorage.getItem("yourFinalScore"));
