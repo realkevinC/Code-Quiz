@@ -12,8 +12,7 @@ N/A
 ## Link
 
 https://realkevinc.github.io/Code-Quiz/
-
-[!screencapture-realkevinc-github-io-Code-Quiz-2022-10-07-11_14_46.png] (/Users/kevinchen/bcs/challenges/password-generator/screencapture-file-Users-kevinchen-bcs-challenges-password-generator-index-html-2022-10-03-19_43_18.png)
+<img src="/Users/kevinchen/bcs/challenges/Code-Quiz/screencapture-realkevinc-github-io-Code-Quiz-2022-10-07-11_14_46.png">
 
 ## Usage
 
